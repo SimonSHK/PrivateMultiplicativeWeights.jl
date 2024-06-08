@@ -14,10 +14,10 @@ function factored_marginals(d=20, order=3, n=1000)
     mwem(FactorParities(d, order), Tabular(data_matrix), MWParameters(verbose=true))
 end
 
-function range_queries()
+function range_queries(eps = 1, iters = 10, reps = 10)
     histogram = vcat(zeros(100), ones(100), zeros(100))
     data = Histogram(histogram, 100)
-    mwem(SeriesRangeQueries(300), data, MWParameters(repetitions=100, verbose=true))
+    mwem(SeriesRangeQueries(300), data, MWParameters(epsilon = eps, iterations = iters, repetitions=reps, verbose=true))
 end
 
 # print("Elapsed time: ", @elapsed marginals())
