@@ -65,8 +65,13 @@ function mwem(queries::Queries, data::Data, ps=MWParameters())
         @printf("0\t %.3f\t\t %.3f\n", error, time)
     end
 
+    error_means = Float64[]
+    error_maxes = Float64[]
+    times = Float64[]
+
     # Iterations
     for t = 1:ps.iterations
+        push!(times, t)
         time = @elapsed begin
             # select query via noisy max
             qindex = noisy_max(mwstate, ps.noisy_max_budget)
@@ -89,8 +94,13 @@ function mwem(queries::Queries, data::Data, ps=MWParameters())
             error_max = maximum_error(mwstate)
             @printf("itr: %d\t mean_error: %.3f\t\t %.3f\n", t, error_mean, time)
             @printf("itr: %d\t max_error: %.3f\t\t %.3f\n", t, error_max, time)
+
+            push!(error_means, error_mean)
+            push!(error_maxes, error_max)
+
         end
     end
 
-    mwstate
+    # mwstate
+    return (mwstate, times, error_means, error_maxes)
 end
