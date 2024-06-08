@@ -54,6 +54,7 @@ include("gosper.jl")
 include("parities.jl")
 include("error.jl")
 include("mwem.jl")
+include("../examples/marginals.jl")
 
 """
     PrivateMultiplicativeWeights
